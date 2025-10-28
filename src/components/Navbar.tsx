@@ -49,11 +49,11 @@ export default function Navbar() {
       <button className="flex items-center justify-between gap-2  bg-primary text-white py-3 px-5 rounded-lg hover:bg-primary-dark transition">
            <span
               
-               className="text-xl bg-secondary/20 text-secondary px-2 py-1 rounded-lg"
+               className="text-lg bg-secondary/20 text-secondary px-2 py-1 rounded-lg"
                 >
                  {cart.length}
              </span>
-      <FiShoppingCart className="text-2xl" />
+      <FiShoppingCart className="text-xl" />
       </button>
     </Link>
         <button

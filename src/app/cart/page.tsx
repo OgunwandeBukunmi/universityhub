@@ -63,11 +63,15 @@ export default function CartPage() {
             </div>
           </>
         )}
-        <div className="flex flex-row items-center justify-end mt-8 py-2">
+        {cart.length > 0 ? (
+           <div className="flex flex-row items-center justify-end mt-8 py-2">
           <Link
           href="/checkout"
            className="px-3 py-2 text-xl bg-secondary rounded-lg">Checkout</Link>
-        </div>
+        </div>)
+        :(<>
+        </>)}
+       
         
       </div>
     </section>
