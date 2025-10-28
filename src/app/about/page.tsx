@@ -24,20 +24,23 @@ export default function ContactPage() {
             We’re Here to Help Students Succeed
           </h2>
           <p className="text-gray-200 text-lg">
-            At University Hub, our mission is to make studying easier and more
-            collaborative. Have questions, suggestions, or feedback? We’d love
-            to hear from you! Whether you want to contribute PDFs, report
-            issues, or just say hi, you’re in the right place.
+           University Project Hub is an academic support platform established to assist students in achieving excellence through comprehensive guidance on seminars, research projects, and academic assignments. The platform is dedicated to fostering academic growth by providing structured, well-researched, and original materials that align with institutional standards and research ethics.
+
+Our primary objective is to bridge the gap between students and quality academic resources by offering professional assistance throughout the research and writing process. With a team of qualified researchers, writers, and subject specialists, University Project Hub ensures that each academic work is prepared with precision, clarity, and adherence to scholarly conventions.
+
+We are committed to promoting a culture of academic integrity and intellectual development. Through our services, students are empowered to enhance their understanding of research methodologies, data analysis, and academic writing, thereby strengthening their overall academic performance.
+
+At University Project Hub, excellence is not just a goal—it is a standard.
           </p>
 
           <div className="space-y-4">
             <div className="flex items-center gap-3 text-gray-100">
               <FaEnvelope className="text-indigo-500" />
-              <span>contact@universityhub.com</span>
+              <span>emmaaschoht22@gmail.com</span>
             </div>
             <div className="flex items-center gap-3 text-gray-100">
               <FaPhoneAlt className="text-indigo-500" />
-              <span>+234 801 234 5678</span>
+              <span>+234 903 262 6830</span>
             </div>
           </div>
         </div>

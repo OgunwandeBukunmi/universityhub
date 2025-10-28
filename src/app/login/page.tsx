@@ -19,11 +19,13 @@ export default function Page() {
         setError("Incomplete Credentials")
         return
     }
+    let currentname = name.trim()
+    let currentpassword  = password.trim()
     try{
         const request = await fetch("/api/login", {
             method :"POST",
             headers: { 'Content-Type': 'application/json' },
-            body : JSON.stringify({name,password})
+            body : JSON.stringify({name : currentname,password : currentpassword})
         })
         const response = await request.json()
         if(response.success === true ){
