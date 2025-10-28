@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&family=Funnel+Sans:ital,wght@0,300..800;1,300..800&family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap');
+@import "tailwindcss";
+
+:root {
+  --primary: hsl(198, 100%, 51%);
+  --secondary : hsl(325, 100%, 68%);
+  --accent : hsl(48, 100%, 58%); 
+  --background : hsl(210, 20%, 10%);
+  --foreground: #ffffff;
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --font-funnel : Funnel Sans,sans-serif;
+  --font-google : Bitcount Grid Single , sans-serif;
+  --color-secondary : var(--secondary);
+  --color-accent : var(--accent);
+  --color-background : var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+
+
+
+body {
+  background:  var(--background);
+  color: var(--foreground);
+  font-family: "Bitcount Grid Single", sans-serif;
+}
