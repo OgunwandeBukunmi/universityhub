@@ -46,10 +46,10 @@ export default function Navbar() {
         <h1 className="text-3xl font-semibold text-[hsl(198,100%,51%)]">University Hub</h1>
         <div className="flex flex-row items-center justify-center gap-3">
       <Link href="/cart">
-      <button className="flex items-center justify-between gap-2  bg-primary text-white py-3 px-5 rounded-lg hover:bg-primary-dark transition">
+      <button className="flex items-center justify-between gap-1  bg-primary text-white py-2 px-2 rounded-lg hover:bg-primary-dark transition">
            <span
               
-               className="text-lg bg-secondary/20 text-secondary px-2 py-1 rounded-lg"
+               className="text-lg bg-secondary/20 text-secondary px-1 py-1 rounded-lg"
                 >
                  {cart.length}
              </span>
@@ -57,7 +57,7 @@ export default function Navbar() {
       </button>
     </Link>
         <button
-          className="p-2 z-20"
+          className="p-2 z-30"
           onClick={() => setIsHidden(!isHidden)}
           aria-label="Toggle menu"
         >
@@ -92,7 +92,7 @@ export default function Navbar() {
         {/* Mobile Menu Overlay */}
         <ul
           className={`absolute top-0 left-0 w-full h-screen flex flex-col items-center justify-center text-white bg-[#1E293B]  gap-6 text-3xl transition-all duration-300 ease-in-out ${
-            isHidden ? "opacity-0 pointer-events-none" : "opacity-100"
+            isHidden ? "opacity-0 pointer-events-none" : "opacity-100 z-20"
           }`}
         >
           {["Home", "Products", "About"].map((item, index) => (
