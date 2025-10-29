@@ -53,7 +53,7 @@ export default function ProductsPage() {
 
   function sendTowhatsapp(){
     if(!name.trim() || !institution.trim() || !topic.trim() ||! email.trim()) setError("Incomplete Credentials")
-     const phoneNumber = "2349032626830"; // Seller’s number
+     const phoneNumber = "2349044181552"; // Seller’s number
     const message = `Hi! My name is ${name}.I study at ${institution}.
      I am working on this final year topic:${topic} and i will need your help for it. My Email is ${email}`
     const encodedMessage = encodeURIComponent(message);

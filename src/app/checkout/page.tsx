@@ -9,7 +9,7 @@ export default function page() {
     const[email,setEmail] = useState("")
 
   const handleWhatsAppChat = () => {
-    const phoneNumber = "2349032626830"; // Seller’s number
+    const phoneNumber = "2349044181552"; // Seller’s number
     const message = `Hi! My name is ${name}. order details are: ${cart
       ?.map((item) => item.title)
       .join(", ")}.
