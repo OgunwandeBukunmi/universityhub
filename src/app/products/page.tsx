@@ -205,7 +205,7 @@ export default function ProductsPage() {
       )}
 
       <div className="w-full flex items-center justify-center py-16 px-8">
-        <main className="w-full max-w-lg bg-white/10 backdrop-blur-md border border-white/10 rounded-md p-8">
+        <main className="w-full max-w-lg bg-white/10 backdrop-blur-md border border-white/10 rounded-md  p-4 md:p-8">
           <h1 className="text-center text-4xl md:text-5xl font-bold mb-8 ">Final Year Projects</h1>
           {error ? (
              <p className="p-2 text-red-200 bg-red-900 text-xl">{error}</p>
