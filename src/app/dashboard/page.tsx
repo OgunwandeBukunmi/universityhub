@@ -3,18 +3,22 @@ import React, { FormEvent, useEffect, useState } from "react";
 import useProductStore from "@/src/store/useProductStore.js"
 import { ObjectId } from "mongodb";
 
+
+
 export default function DashboardPage() {
   const [posts, setPosts] = useState<any[]>([]);
   const[title,setTitle] = useState<string | null>("")
   const[description,setDescription] = useState<string | null>("")
   const[category,setCategory] = useState<string | null>("")
+  const[faculty,setFaculty] = useState<string | null>("")
   const [currentStep, setCurrentStep] = useState<"all-posts" | "create-post">("all-posts");
   const [loading, setLoading] = useState(false);
 
 
   useEffect(() => {
+
     async function fetchData() {
-    
+
           setLoading(true);
       try {
         const res = await fetch("/api/docs");
@@ -65,12 +69,12 @@ export default function DashboardPage() {
         headers : {
           "Content-Type" : "application/json"
         },
-        body : JSON.stringify({title,description,splitcategory})
+        body : JSON.stringify({title,faculty,description,splitcategory})
       })
      
       const response = await request.json();
        if(request.ok){
-        const newdata = {_id:response.data.insertedId ,title,description,category : splitcategory}
+        const newdata = {_id:response.data.insertedId ,title,faculty,description,category : splitcategory}
         console.log(newdata)
         setPosts([...posts,newdata])
       }
@@ -143,12 +147,20 @@ export default function DashboardPage() {
           value={title}
           onChange={(e)=>setTitle(e.target.value)}
         />
+          <select name="faculty" id="" className="w-full border border-gray-300 text-gray-800  p-2 rounded-md  " onChange={(e)=> { setFaculty(e.target.value)}}>
+          <option value="law">Law</option>
+          <option value="art">Arts</option>
+          <option value="social sciences"> Social Science</option>
+          <option value="health sciences">Health Science</option>
+          <option value="technology" className="p-2">Technology</option>
+        </select>
         <textarea
           placeholder="Description"
           className="w-full border border-gray-300 text-gray-800  p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-secondary"
           value={description}
           onChange={(e)=>setDescription(e.target.value)}
         />
+      
         <input
           type="text"
           placeholder="Categories"

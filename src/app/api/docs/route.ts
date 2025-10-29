@@ -18,14 +18,14 @@ return NextResponse.json({success : true,data : docs},{status:200})
 }
 
 export async function POST(req : NextRequest){
-    const {title, description ,splitcategory }  = await req.json()
+    const {title,faculty, description ,splitcategory }  = await req.json()
     try{
         const db = client.db("emmanuel")
-        const doc = await db.collection("docs").insertOne({title, description , category : splitcategory})
+        const doc = await db.collection("docs").insertOne({title,faculty, description , category : splitcategory})
 
         if(doc){
             console.log(doc)
-            return  NextResponse.json({succes : true,data:doc},{status:200})
+            return  NextResponse.json({success : true,data:doc},{status:200})
         }
     }
     catch(err){

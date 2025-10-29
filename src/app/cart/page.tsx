@@ -3,6 +3,7 @@ import React from "react";
 import useCartStore from "@/src/store/useCartStore";
 import { FaTrashAlt, FaShoppingCart } from "react-icons/fa";
 import Link from "next/link";
+import Navbar from "@/src/components/Navbar";
 
 export default function CartPage() {
   const { cart, removeFromCart, clearCart } = useCartStore();
@@ -11,8 +12,9 @@ export default function CartPage() {
 
 
   return (
-    <section className="min-h-screen bg-background px-6 py-12 font-open text-white">
-      <div className="max-w-6xl mx-auto">
+    <section className="min-h-screen bg-background  font-open text-white">
+      <Navbar/>
+      <div className="max-w-6xl mx-auto  px-6 py-12">
         {/* Header */}
         <div className="flex items-center justify-between mb-10">
           <h1 className="text-4xl font-bold flex items-center gap-3">
@@ -45,10 +47,8 @@ export default function CartPage() {
                   className="bg-gray-900/40 rounded-2xl p-6 shadow-md border border-gray-700 hover:border-indigo-500 hover:scale-[1.02] transition duration-200 flex flex-col justify-between"
                 >
                   <div>
-                    <div className="w-full h-40 bg-gray-800 rounded-xl mb-4 flex items-center justify-center text-gray-500 text-sm">
-                      <span>No Image</span>
-                    </div>
-                    <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
+                  
+                    <h2 className="text-2xl font-semibold mb-2">{item.title}</h2>
                     <p className="text-gray-300 text-sm mb-4">{item.description}</p>
                   </div>
 

@@ -1,33 +1,40 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import useCartStore from "@/src/store/useCartStore";
 import { FiShoppingCart } from "react-icons/fi";
 import Navbar from "@/src/components/Navbar";
-import { ObjectId } from "mongodb";
+import Link from "next/link";
+import useProductStore from "@/src/store/useProductStore";
+import Button from "@/src/components/Button";
 
 export type item = {
-  _id : string,
-  title : string,
-  description: string,
-  category: string[]
-}
-
+  _id: string;
+  title: string;
+  description: string;
+  faculty: string;
+  category: string[];
+};
 
 export default function ProductsPage() {
+  const{addNewProducts} = useProductStore()
   const [products, setProducts] = useState<item[]>([]);
   const [filtered, setFilteredPosts] = useState<item[]>([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const { addToCart } = useCartStore();
 
+  // 🧠 Fetch Data from DB
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
       try {
         const res = await fetch("/api/docs");
         const data = await res.json();
-        setProducts(data.data || []);
-        setFilteredPosts(data.data || []); // initially show all
+        const fetchedProducts = data.data || [];
+        addNewProducts(data.data)
+        setProducts(fetchedProducts);
+        setFilteredPosts(fetchedProducts); // show all initially
+
       } catch (err) {
         console.error("Error fetching products:", err);
       } finally {
@@ -42,7 +49,6 @@ export default function ProductsPage() {
   function handleSearch(searchValue: string) {
     setSearch(searchValue);
 
-    // Split search terms by space
     const searchTerms = searchValue.toLowerCase().split(" ").filter(Boolean);
 
     if (searchTerms.length === 0) {
@@ -51,7 +57,6 @@ export default function ProductsPage() {
     }
 
     const filteredResults = products.filter((product) => {
-      // Combine title + description + category for broader search
       const combinedText = [
         product.title,
         product.description,
@@ -60,20 +65,29 @@ export default function ProductsPage() {
         .join(" ")
         .toLowerCase();
 
-      // Return true if any search term matches any part of the product data
       return searchTerms.some((term) => combinedText.includes(term));
     });
 
     setFilteredPosts(filteredResults);
   }
 
+  // 🧩 Group by faculty
+  const groupedByFaculty = useMemo(() => {
+    const groups: Record<string, item[]> = {};
+    products.forEach((p) => {
+      if (!groups[p.faculty]) groups[p.faculty] = [];
+      groups[p.faculty].push(p);
+    });
+    return groups;
+  }, [products]);
+
   return (
     <section className="bg-background min-h-screen text-white">
       <Navbar />
 
-      {/* 🧭 Header + Search */}
+      {/* Header + Search */}
       <div className="px-6 pt-10 pb-6 flex flex-col md:flex-row items-center justify-between gap-4">
-        <h1 className="text-4xl md:text-5xl font-bold">Find Helpful PDFs</h1>
+        <h1 className="text-4xl md:text-5xl font-bold">Welcome👋</h1>
         <input
           type="text"
           placeholder="🔍 Search by title, description, or category..."
@@ -83,49 +97,46 @@ export default function ProductsPage() {
         />
       </div>
 
-      {/* 🧱 Product Grid */}
+      {/* Display Section */}
       {loading ? (
         <div className="flex justify-center items-center h-[60vh] text-gray-400 text-xl">
           Loading resources...
         </div>
-      ) : (
+      ): products?.length == 0 ? (
+         <div className="flex justify-center items-center h-[60vh] text-gray-400 text-xl">
+          No Resources now
+        </div>
+      ) : search ? (
+        // 🔍 Search Results (no grouping)
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 px-6 pb-10">
           {filtered.length > 0 ? (
-            filtered.map((item:item) => (
+            filtered.map((item) => (
               <div
                 key={item._id}
-                className="group relative bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl shadow-lg overflow-hidden hover:scale-[1.02] hover:shadow-xl transition-all duration-300"
+                className="group bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl shadow-lg p-6 hover:scale-[1.02] hover:shadow-xl transition-all duration-300"
               >
-                <div className="p-6 flex flex-col justify-between h-full">
-                  <div>
-                    <h2 className="text-2xl font-semibold text-white mb-2 group-hover:text-secondary transition">
-                      {item.title}
-                    </h2>
-                    <p className="text-gray-300 text-sm mb-4 line-clamp-3">
-                      {item.description}
-                    </p>
-                    {item.category && (
-                      <div className="flex flex-wrap gap-2">
-                        {item.category.map((cat: string, i: number) => (
-                          <span
-                            key={i}
-                            className="text-xs bg-secondary/20 text-secondary px-2 py-1 rounded-lg"
-                          >
-                            {cat}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  <button
-                    onClick={() => addToCart(item)}
-                    className="mt-6 flex items-center justify-center gap-2 bg-secondary text-white py-2 rounded-xl font-medium hover:bg-secondary/90 transition"
-                  >
-                    <FiShoppingCart className="text-lg" />
-                    Add to Cart
-                  </button>
+                <h2 className="text-2xl font-semibold text-white mb-2 group-hover:text-secondary transition">
+                  {item.title}
+                </h2>
+                <p className="text-gray-300 text-sm mb-4 line-clamp-3">
+                  {item.description}
+                </p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {item.category?.map((cat, i) => (
+                    <span
+                      key={i}
+                      className="text-xs bg-secondary/20 text-secondary px-2 py-1 rounded-lg"
+                    >
+                      {cat}
+                    </span>
+                  ))}
                 </div>
+                <button
+                  onClick={() => addToCart(item)}
+                  className="w-full flex items-center justify-center gap-2 bg-secondary text-white py-2 rounded-xl font-medium hover:bg-secondary/90 transition"
+                >
+                  <FiShoppingCart /> Add to Cart
+                </button>
               </div>
             ))
           ) : (
@@ -133,6 +144,49 @@ export default function ProductsPage() {
               No matching PDFs found.
             </p>
           )}
+        </div>
+      ) : (
+        // 🏫 Faculty Grouping View
+        <div className="px-6 pb-10 space-y-20">
+          {Object.entries(groupedByFaculty).map(([faculty, items]) => (
+            <div key={faculty}>
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-3xl font-bold capitalize">{faculty}</h2>
+                <Link href={`/products/${encodeURIComponent(faculty)}`}>
+                  <button className="px-4 py-2 bg-secondary/20 text-secondary rounded-lg hover:bg-secondary/30 transition">
+                    View More
+                  </button>
+                </Link>
+              </div>
+
+              <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                {items.slice(0, 5).map((item) => (
+                  <div
+                    key={item._id}
+                    className="group bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl shadow-lg p-6 hover:scale-[1.02] hover:shadow-xl transition-all duration-300"
+                  >
+                    <h2 className="text-2xl font-semibold text-white mb-2 group-hover:text-secondary transition">
+                      {item.title}
+                    </h2>
+                    <p className="text-gray-300 text-sm mb-4 line-clamp-3">
+                      {item.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {item.category?.map((cat, i) => (
+                        <span
+                          key={i}
+                          className="text-xs bg-secondary/20 text-secondary px-2 py-1 rounded-lg"
+                        >
+                          {cat}
+                        </span>
+                      ))}
+                    </div>
+                 <Button click={addToCart} item={item}/>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </section>

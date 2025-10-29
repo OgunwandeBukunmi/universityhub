@@ -13,7 +13,7 @@ export default function Navbar() {
     <header className="w-full font-open">
       {/* --- Desktop Navbar --- */}
       <div className="hidden lg:flex flex-row gap-50 items-center p-8  shadow-sm">
-        <h1 className="text-4xl font-semibold text-[hsl(198,100%,51%)]">University Hub</h1>
+        <h1 className="text-4xl font-semibold text-[hsl(198,100%,51%)]"><Link href="/">University Hub</Link></h1>
 
         <ul className="flex flex-row gap-8 items-center">
           {["Home", "Products", "About"].map((item, index) => (
