@@ -206,15 +206,15 @@ export default function ProductsPage() {
 
       <div className="w-full flex items-center justify-center py-16 px-8">
         <main className="w-full max-w-lg bg-white/10 backdrop-blur-md border border-white/10 rounded-md p-8">
-          <h1 className=" text-4xl md:text-5xl font-bold mb-8 ">Final Year Projects</h1>
+          <h1 className="text-center text-4xl md:text-5xl font-bold mb-8 ">Final Year Projects</h1>
           {error ? (
              <p className="p-2 text-red-200 bg-red-900 text-xl">{error}</p>
           ):(
             <></>
           )}
          
-          <div className="flex flex-col gap-4 p-4  ">
-            <input type="text" placeholder="Your Name" className="p-2 bg-gray-800 text-lg  outline-none rounded-md focus:ring-2 focus:ring-secondary "  value={name} onChange={(e)=>setName(e.target.value)}/>
+          <div className="flex flex-col gap-4 p-2 md:p-4  ">
+            <input type="text" placeholder="Your Name" className=" p-2 bg-gray-800 text-lg  outline-none rounded-md focus:ring-2 focus:ring-secondary "  value={name} onChange={(e)=>setName(e.target.value)}/>
             <input type="text" placeholder="Your institution" className="p-2 text-lg bg-gray-800 text-gray-200 outline-none rounded-md focus:ring-2 focus:ring-secondary " value={institution} onChange={(e)=>setInstitution(e.target.value)}  />
             <input type="text" placeholder="Your topic" className="p-2 text-lg bg-gray-800 outline-none rounded-md focus:ring-2 focus:ring-secondary " value={topic} onChange={(e)=>setTopic(e.target.value)} />
             <input type="email"  placeholder="Your Email" className="p-2 text-lg bg-gray-800 outline-none rounded-md focus:ring-2 focus:ring-secondary " value={email} onChange={(e)=>setEmail(e.target.value)} />
