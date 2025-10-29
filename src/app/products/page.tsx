@@ -6,6 +6,7 @@ import Navbar from "@/src/components/Navbar";
 import Link from "next/link";
 import useProductStore from "@/src/store/useProductStore";
 import Button from "@/src/components/Button";
+import Footer from "@/src/components/Footer";
 
 export type item = {
   _id: string;
@@ -18,6 +19,11 @@ export type item = {
 export default function ProductsPage() {
   const{addNewProducts} = useProductStore()
   const [products, setProducts] = useState<item[]>([]);
+  const[name,setName] = useState<string | null>("")
+  const[institution,setInstitution] = useState<string | null>("")
+  const[topic,setTopic] = useState<string | null>("")
+  const[email,setEmail] = useState<string | null>("")
+  const[error,setError] = useState<string | null>("")
   const [filtered, setFilteredPosts] = useState<item[]>([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
@@ -45,6 +51,14 @@ export default function ProductsPage() {
     fetchData();
   }, []);
 
+  function sendTowhatsapp(){
+    if(!name.trim() || !institution.trim() || !topic.trim() ||! email.trim()) setError("Incomplete Credentials")
+     const phoneNumber = "2349032626830"; // Seller’s number
+    const message = `Hi! My name is ${name}.I study at ${institution}.
+     I am working on this final year topic:${topic} and i will need your help for it. My Email is ${email}`
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, "_blank");
+  }
   // 🔍 Handle Search
   function handleSearch(searchValue: string) {
     setSearch(searchValue);
@@ -189,6 +203,27 @@ export default function ProductsPage() {
           ))}
         </div>
       )}
+
+      <div className="w-full flex items-center justify-center py-16 px-8">
+        <main className="w-full max-w-lg bg-white/10 backdrop-blur-md border border-white/10 rounded-md p-8">
+          <h1 className=" text-4xl md:text-5xl font-bold mb-8 ">Final Year Projects</h1>
+          {error ? (
+             <p className="p-2 text-red-200 bg-red-900 text-xl">{error}</p>
+          ):(
+            <></>
+          )}
+         
+          <div className="flex flex-col gap-4 p-4  ">
+            <input type="text" placeholder="Your Name" className="p-2 bg-gray-800 text-lg  outline-none rounded-md focus:ring-2 focus:ring-secondary "  value={name} onChange={(e)=>setName(e.target.value)}/>
+            <input type="text" placeholder="Your institution" className="p-2 text-lg bg-gray-800 text-gray-200 outline-none rounded-md focus:ring-2 focus:ring-secondary " value={institution} onChange={(e)=>setInstitution(e.target.value)}  />
+            <input type="text" placeholder="Your topic" className="p-2 text-lg bg-gray-800 outline-none rounded-md focus:ring-2 focus:ring-secondary " value={topic} onChange={(e)=>setTopic(e.target.value)} />
+            <input type="email"  placeholder="Your Email" className="p-2 text-lg bg-gray-800 outline-none rounded-md focus:ring-2 focus:ring-secondary " value={email} onChange={(e)=>setEmail(e.target.value)} />
+          </div>
+          <div className="flex justify-end"><button className="bg-accent p-2 text-xl rounded-md" onClick={sendTowhatsapp}>Get Started</button></div>
+          
+        </main>
+      </div>
+      <Footer/>
     </section>
   );
 }
