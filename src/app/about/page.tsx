@@ -36,11 +36,11 @@ At University Project Hub, excellence is not just a goal—it is a standard.
           <div className="space-y-4">
             <div className="flex items-center gap-3 text-gray-100">
               <FaEnvelope className="text-indigo-500" />
-              <span>emmaaschoht22@gmail.com</span>
+              <span>universityprojecthub@gmail.com</span>
             </div>
             <div className="flex items-center gap-3 text-gray-100">
               <FaPhoneAlt className="text-indigo-500" />
-              <span>+234 903 262 6830</span>
+              <span>+234 9044181552</span>
             </div>
           </div>
         </div>
