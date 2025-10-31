@@ -17,7 +17,8 @@ export type item = {
 };
 
 export default function ProductsPage() {
-  const{addNewProducts} = useProductStore()
+  const{addNewProducts} = useProductStore() 
+  const { addToCart } = useCartStore();
   const [products, setProducts] = useState<item[]>([]);
   const[name,setName] = useState<string | null>("")
   const[institution,setInstitution] = useState<string | null>("")
@@ -27,7 +28,8 @@ export default function ProductsPage() {
   const [filtered, setFilteredPosts] = useState<item[]>([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const { addToCart } = useCartStore();
+  const[department,setDepartment] = useState("")
+
 
   // 🧠 Fetch Data from DB
   useEffect(() => {
@@ -54,7 +56,7 @@ export default function ProductsPage() {
   function sendTowhatsapp(){
     if(!name.trim() || !institution.trim() || !topic.trim() ||! email.trim())return setError("Incomplete Credentials")
      const phoneNumber = "2349044181552"; // Seller’s number
-    const message = `Hi! My name is ${name}.I study at ${institution}.
+    const message = `Hi! My name is ${name}.I study at ${institution} in ${department}.
      I am working on this final year topic:${topic} and i will need your help for it. My Email is ${email}`
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, "_blank");
@@ -216,8 +218,11 @@ export default function ProductsPage() {
           <div className="flex flex-col gap-4 p-2 md:p-4  ">
             <input type="text" placeholder="Your Name" className=" p-2 bg-gray-800 text-lg  outline-none rounded-md focus:ring-2 focus:ring-secondary "  value={name} onChange={(e)=>setName(e.target.value)}/>
             <input type="text" placeholder="Your institution" className="p-2 text-lg bg-gray-800 text-gray-200 outline-none rounded-md focus:ring-2 focus:ring-secondary " value={institution} onChange={(e)=>setInstitution(e.target.value)}  />
+                 <input type="text"  placeholder="Your Department" className="p-2 text-lg bg-gray-800 outline-none rounded-md focus:ring-2 focus:ring-secondary " value={department} onChange={(e)=>setDepartment(e.target.value)} />
             <input type="text" placeholder="Your topic" className="p-2 text-lg bg-gray-800 outline-none rounded-md focus:ring-2 focus:ring-secondary " value={topic} onChange={(e)=>setTopic(e.target.value)} />
             <input type="email"  placeholder="Your Email" className="p-2 text-lg bg-gray-800 outline-none rounded-md focus:ring-2 focus:ring-secondary " value={email} onChange={(e)=>setEmail(e.target.value)} />
+        
+
           </div>
           <div className="flex justify-end"><button className="bg-accent p-2 text-xl rounded-md" onClick={sendTowhatsapp}>Get Started</button></div>
           
